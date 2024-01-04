@@ -1,0 +1,30 @@
+{
+  "name": "assesment_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json && nodemon dist/index.js",
+    "start-dev": "concurrently \"tsc -p tsconfig.json && nodemon dist/index.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^8.5.0",
+    "axios": "^1.6.3",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.25.2",
+    "fastify-cors": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/fastify-cors": "^2.1.0",
+    "@types/node": "^20.10.6",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
