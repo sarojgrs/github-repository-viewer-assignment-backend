@@ -13,6 +13,10 @@ export default async function (fastify: FastifyInstance) {
   fastify.get("/api/profile", async (request, reply) => {
     const { username, selectedRepoType }: any = request.query;
     try {
+      if (!GITHUB_PERSONAL_ACCESS_TOKEN) {
+        throw new CustomError("Git hub personal api not found..", 400);
+      }
+
       let url = `/users/${username}`; //public
       if (selectedRepoType === REPO_TYPES.PRIVATE) url = `/user`; //private ;
 
@@ -89,8 +93,13 @@ export default async function (fastify: FastifyInstance) {
 
 function handleErrors(error: CustomError, reply: any) {
   const err: any = error;
-  const errorStatusCode = err.request.res.statusCode;
-  console.log(errorStatusCode);
+
+  let errorStatusCode = 500;
+  if (error instanceof CustomError) {
+    errorStatusCode = error.statusCode;
+  } else {
+    errorStatusCode = err.request.res.statusCode;
+  }
   // Handle specific errors if needed
   if (errorStatusCode === 404) {
     reply.status(errorStatusCode).send({ error: "User Not Found" });
